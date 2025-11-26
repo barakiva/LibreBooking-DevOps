@@ -1,0 +1,28 @@
+services:
+  bookme-prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: librebooking-app-prod
+    depends_on:
+      - db-prod
+    ports:
+      - "80:80"
+    environment:
+      - LB_APP_TITLE=LibreBooking-Prod
+      - LB_DATABASE_HOSTSPEC=librebooking-db-prodc
+      - LB_DATABASE_USER=librebooking
+      - LB_DATABASE_PASSWORD=devpass
+      - LB_DATABASE_NAME=librebooking
+      - LB_ENV=development
+      - TZ=UTC
+  db-prod:
+    image: mariadb:12.0.2
+    container_name: librebooking-db-prodc
+    environment:
+      - MYSQL_ROOT_PASSWORD=devpass
+      - MYSQL_DATABASE=librebooking
+      - MYSQL_USER=librebooking
+      - MYSQL_PASSWORD=devpass
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
