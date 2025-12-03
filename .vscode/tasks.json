@@ -1,0 +1,44 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "logs:bookme",
+      "command": "docker compose logs -f bookme",
+      "type": "shell",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "logs:db",
+      "command": "docker compose logs -f db",
+      "type": "shell",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "logs:phpmyadmin",
+      "command": "docker compose logs -f phpmyadmin",
+      "type": "shell",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "logs:all",
+      "dependsOn": [
+        "logs:bookme",
+        "logs:db",
+        "logs:phpmyadmin"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    }
+  ]
+}
