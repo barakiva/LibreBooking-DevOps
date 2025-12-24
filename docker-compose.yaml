@@ -11,19 +11,21 @@ services:
       - "80:80"
     environment:
       - LB_APP_TITLE=LibreBooking
-      - LB_DATABASE_HOSTSPEC=librebooking-db
+      - LB_DATABASE_HOSTSPEC=db
       - LB_DATABASE_USER=librebooking
       - LB_DATABASE_PASSWORD=devpass
       - LB_DATABASE_NAME=librebooking
       - LB_ENV=development
       - TZ=UTC
+      - LB_INSTALL_PASSWORD=secret
+      - LB_SCRIPT_URL=http://localhost/Web
     env_file:
       - .env
   db:
     image: mariadb:12.0.2
     environment:
-      - MYSQL_ROOT_PASSWORD=devpass
       - MYSQL_DATABASE=librebooking
+      - MYSQL_ROOT_PASSWORD=devpass
       - MYSQL_USER=librebooking
       - MYSQL_PASSWORD=devpass
     volumes:

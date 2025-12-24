@@ -1,0 +1,5 @@
+
+docker run --rm \
+  --network container:bookme-v40-db-1 \
+  mariadb:12.0.2 \
+  mariadb -h 127.0.0.1 -u root -pdevpass < ~/dump_dec.sql
