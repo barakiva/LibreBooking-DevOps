@@ -6,9 +6,10 @@ services:
       args:
         APP_GH_REF: ${LB_RELEASE}
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     ports:
-      - "80:80"
+      - "8080:80"
     environment:
       - LB_APP_TITLE=LibreBooking
       - LB_DATABASE_HOSTSPEC=db
@@ -28,8 +29,20 @@ services:
       - MYSQL_ROOT_PASSWORD=devpass
       - MYSQL_USER=librebooking
       - MYSQL_PASSWORD=devpass
-    volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "/usr/bin/mariadb-admin",
+          "ping",
+          "--socket=/run/mysqld/mysqld.sock",
+          "-uroot",
+          "-p'devpass'"
+        ]
+      interval: 2s
+      timeout: 5s
+      retries: 2
+
 
   phpmyadmin:
     image: phpmyadmin:latest
@@ -38,7 +51,7 @@ services:
       PMA_USER: root
       PMA_PASSWORD: devpass
     ports:
-      - "8080:80"
+      - "8081:80"
     depends_on:
       db:
-        condition: service_started
+        condition: service_healthy
