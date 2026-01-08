@@ -29,6 +29,8 @@ services:
       - MYSQL_ROOT_PASSWORD=devpass
       - MYSQL_USER=librebooking
       - MYSQL_PASSWORD=devpass
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
     healthcheck:
       test:
         [
